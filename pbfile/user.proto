@@ -1,0 +1,34 @@
+//  指定当前 proto语法的版本，有2和3
+syntax = "proto3";
+
+//  go_package = "path;name";
+//  path 表示生成的 go文件的存放地址，会自动生成目录的
+//  name 表示生成的 go文件所属的包名，可以不写，默认为 proto文件所属的包名
+option go_package = "../service";
+
+//  指定等会文件生成出来的 package
+package service;
+
+//  消息 -- 要传输的对象
+message User {
+  string username = 1;    //  1 是标识号  标识号是 [0,2^29-1]范围内的一个整数
+  int32 age = 2;
+  optional string password = 3;
+  repeated string addresses = 4;
+}
+
+//  message - 消息就是要传输的数据格式的定义
+//  required 消息体中的必填字段，不设置会导致编解码异常  这是 proto2中的语法，在 proto3中默认为必填的,可以不写
+//  optional 消息体中的可选字段，
+//  repeated 消息体中的可重复字段，重复的值的顺序会被保留, 在 go中重复的会被定义为切片
+//  optional string password = 2;
+
+//  proto2需要指定默认值, 3不用
+
+service SearchService{
+  //  rpc 服务的函数名 (传入参数) 返回 (返回参数)
+
+}
+
+
+

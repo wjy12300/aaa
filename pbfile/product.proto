@@ -1,0 +1,41 @@
+syntax = "proto3";
+option go_package = "../service";
+package service;
+
+import "user.proto";
+import "protobuf/any.proto";
+
+message ProductRequest{
+  int32 prod_id = 1;
+}
+
+message ProductResponse{
+  int32 prod_stock = 1;
+  google.protobuf.Any data = 2;
+}
+
+message Content{
+  string msg = 1;
+}
+
+message Test{
+  User user = 1;
+}
+
+service ProdService{
+  rpc GetProductStock(ProductRequest) returns(ProductResponse);
+
+  //  客户端流
+  rpc UpdateProductStock(stream ProductRequest) returns(ProductResponse);
+
+  //  服务端流
+  rpc GetProductStockStream(ProductRequest) returns(stream ProductResponse);
+
+  //  双向流
+  rpc WoShiNiMaStream(stream ProductRequest) returns(stream ProductResponse);
+}
+
+//  生成命令： protoc --proto_path=. --go_out=. --go-grpc_out=. .\product.proto
+
+
+
